@@ -9,9 +9,9 @@ namespace BeerSong
     {
         public string Verses(int begin, int end)
         {
-            Contract.Requires(begin > end);
-            Contract.Requires(end >= 0);
-            Contract.Requires(begin <= 99);
+            if (end <= begin) throw new ArgumentOutOfRangeException("begin, end", "end must be after begin");
+            if (end < 0) throw new ArgumentOutOfRangeException(nameof(end), "must be greater than zero");
+            if (begin > 99) throw new ArgumentOutOfRangeException(nameof(begin), "must be greater than zero");
 
             return string.Join("\n", VersesList(begin, end));
         }
@@ -32,8 +32,8 @@ namespace BeerSong
 
         public VerseGenerator(int verse)
         {
-            Contract.Requires(verse >= 0);
-            Contract.Requires(verse <= 99);
+            if (verse < 0) throw new ArgumentOutOfRangeException(nameof(verse), "must be greater than zero");
+            if (verse > 99) throw new ArgumentOutOfRangeException(nameof(verse), "must be greater than zero");
 
             this.verse = verse;
         }
@@ -68,7 +68,7 @@ namespace BeerSong
         {
             get
             {
-                Contract.Requires(verse >= 1);
+                if (verse < 1) throw new ArgumentOutOfRangeException(nameof(verse), "must be greater than one");
 
                 return (verse == 1)
                     ? "it"
@@ -80,7 +80,7 @@ namespace BeerSong
         {
             get
             {
-                Contract.Requires(verse >= 1);
+                if (verse < 1) throw new ArgumentOutOfRangeException(nameof(verse), "must be greater than one");
 
                 return HowManyBottles(verse - 1);
             }
